@@ -39,6 +39,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    window.WM.init();
     startClock();
     setupStartMenu();
   });
