@@ -23,11 +23,22 @@
       var item = document.createElement("li");
       var button = document.createElement("button");
       button.className = "desktop-icon";
+      button.dataset.appId = app.id;
+      button.setAttribute("aria-selected", "false");
       button.innerHTML =
         '<img src="' + app.icon + '" alt="" /><span>' +
         window.APPS.escapeHtml(window.APPS.t(app.title)) +
         "</span>";
-      button.addEventListener("click", function () { window.APPS.openById(app.id); });
+      button.addEventListener("click", function (event) {
+        if (event.ctrlKey || event.metaKey) {
+          var selected = !button.classList.contains("selected");
+          button.classList.toggle("selected", selected);
+          button.setAttribute("aria-selected", String(selected));
+          event.preventDefault();
+          return;
+        }
+        window.APPS.openById(app.id);
+      });
       item.appendChild(button);
       list.appendChild(item);
     });
@@ -103,6 +114,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     window.I18N.init();
     window.WM.init();
+    window.DesktopSelection.init(document.getElementById("desktop"));
     renderDesktopIcons();
     renderStartMenu();
     startClock();
