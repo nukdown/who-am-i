@@ -73,11 +73,29 @@ body {
   cursor: pointer;
 }
 
+.desktop-icon.selected {
+  background: rgba(31, 111, 235, 0.55);
+  border-color: rgba(255, 255, 255, 0.9);
+  outline: none;
+}
+
 .desktop-icon:hover,
 .desktop-icon:focus-visible {
   background: rgba(31, 111, 235, 0.35);
   border-color: rgba(255, 255, 255, 0.7);
   outline: none;
+}
+
+.desktop-selection-box {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  background: rgba(31, 111, 235, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.desktop {
+  user-select: none;
 }
 
 .desktop-icon img {
