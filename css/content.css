@@ -77,3 +77,12 @@
 
 .contact-list { margin: 0; padding-left: 18px; }
 .contact-list li { margin-bottom: 6px; }
+
+.noscript-fallback {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  padding: 40px;
+  background: #fff;
+  overflow: auto;
+}
