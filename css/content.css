@@ -74,3 +74,6 @@
 .project-card a { color: var(--accent-dark); }
 .project-card .tech { margin: 0 0 6px; color: #6b7a89; font-size: 12px; }
 .project-card p:last-child { margin: 0; }
+
+.contact-list { margin: 0; padding-left: 18px; }
+.contact-list li { margin-bottom: 6px; }

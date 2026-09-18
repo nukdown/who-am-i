@@ -94,6 +94,39 @@ window.APPS = (function () {
     );
   }
 
+  function contactApp() {
+    var en = lang() === "en";
+    var subject = encodeURIComponent(en
+      ? "Opportunity for " + profile.name
+      : "Oportunidade para " + profile.name);
+    var body = encodeURIComponent(en
+      ? "Hi Emanoel,\n\nWe have an opening that might fit your profile.\n\nRole:\nCompany:\nStack:\n"
+      : "Olá Emanoel,\n\nTemos uma vaga que pode combinar com o seu perfil.\n\nVaga:\nEmpresa:\nStack:\n");
+
+    return (
+      '<div class="doc">' +
+      "<h1>" + (en ? "Contact" : "Contato") + "</h1>" +
+      "<p>" + (en
+        ? "The fastest way to reach me is e-mail — I usually reply within 24h."
+        : "O caminho mais rápido é o e-mail — costumo responder em até 24h.") + "</p>" +
+      '<div class="toolbar">' +
+      '<a class="button primary" href="mailto:' + escapeHtml(profile.email) +
+      "?subject=" + subject + "&body=" + body + '">' +
+      (en ? "Send e-mail" : "Enviar e-mail") + "</a>" +
+      '<button class="button" data-action="copy-email" data-value="' + escapeHtml(profile.email) + '">' +
+      (en ? "Copy e-mail" : "Copiar e-mail") + "</button>" +
+      '<a class="button" href="' + escapeHtml(profile.linkedin) + '" target="_blank" rel="noopener">LinkedIn</a>' +
+      '<a class="button" href="' + escapeHtml(profile.github) + '" target="_blank" rel="noopener">GitHub</a>' +
+      "</div>" +
+      '<ul class="contact-list">' +
+      "<li><strong>E-mail:</strong> " + escapeHtml(profile.email) + "</li>" +
+      "<li><strong>" + (en ? "Location" : "Local") + ":</strong> " + escapeHtml(t(profile.location)) + "</li>" +
+      "<li><strong>Status:</strong> " + escapeHtml(t(profile.status)) + "</li>" +
+      "</ul>" +
+      "</div>"
+    );
+  }
+
   var registry = [
     {
       id: "curriculum",
@@ -118,8 +151,26 @@ window.APPS = (function () {
       width: 700,
       height: 500,
       render: projectsApp
+    },
+    {
+      id: "contact",
+      icon: "assets/icons/mail.svg",
+      title: { pt: "Contato", en: "Contact" },
+      width: 560,
+      height: 400,
+      render: contactApp
     }
   ];
+
+  document.addEventListener("click", function (event) {
+    var button = event.target.closest('[data-action="copy-email"]');
+    if (!button || !navigator.clipboard) return;
+    navigator.clipboard.writeText(button.dataset.value).then(function () {
+      var original = button.textContent;
+      button.textContent = lang() === "en" ? "Copied!" : "Copiado!";
+      setTimeout(function () { button.textContent = original; }, 1800);
+    });
+  });
 
   function list() { return registry; }
 
