@@ -1,0 +1,23 @@
+#print-area { display: none; }
+
+@media print {
+  body { overflow: visible; background: #fff; }
+  .desktop, .taskbar, .start-menu, .windows { display: none !important; }
+
+  #print-area {
+    display: block;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px;
+    color: #000;
+    font-family: var(--font-ui);
+    font-size: 12px;
+  }
+
+  #print-area .no-print { display: none; }
+  #print-area h1 { font-size: 20px; margin-bottom: 2px; }
+  #print-area h2 { font-size: 13px; color: #000; border-bottom: 1px solid #000; }
+  #print-area .badge { border: none; padding: 0; background: none; color: #1f6b34; }
+
+  @page { margin: 14mm; }
+}

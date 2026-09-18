@@ -60,11 +60,21 @@ window.APPS = (function () {
       );
     }).join("");
 
+    var en = lang() === "en";
     return (
       '<article class="notepad" id="curriculum">' +
+      '<div class="toolbar no-print">' +
+      '<button class="button primary" data-action="print-resume">' +
+      (en ? "Download PDF / Print" : "Baixar PDF / Imprimir") + "</button>" +
+      '<a class="button" href="mailto:' + escapeHtml(profile.email) + '">' +
+      (en ? "E-mail me" : "Falar comigo") + "</a>" +
+      "</div>" +
       "<h1>" + escapeHtml(profile.name) + "</h1>" +
       "<p>" + escapeHtml(t(profile.role)) + " · " + escapeHtml(profile.email) + "</p>" +
-      "<h2>" + (lang() === "en" ? "Experience & Education" : "Experiência e Formação") + "</h2>" +
+      '<p class="badge available">' + escapeHtml(t(profile.status)) + "</p>" +
+      "<h2>" + (en ? "Summary" : "Resumo") + "</h2>" +
+      "<p>" + escapeHtml(t(profile.summary)) + "</p>" +
+      "<h2>" + (en ? "Experience & Education" : "Experiência e Formação") + "</h2>" +
       jobs +
       "</article>"
     );
@@ -163,6 +173,15 @@ window.APPS = (function () {
   ];
 
   document.addEventListener("click", function (event) {
+    if (event.target.closest('[data-action="print-resume"]')) {
+      var resume = document.getElementById("curriculum");
+      if (!resume) return;
+      var area = document.getElementById("print-area");
+      area.innerHTML = resume.innerHTML;
+      window.print();
+      return;
+    }
+
     var button = event.target.closest('[data-action="copy-email"]');
     if (!button || !navigator.clipboard) return;
     navigator.clipboard.writeText(button.dataset.value).then(function () {
