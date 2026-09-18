@@ -176,30 +176,30 @@ window.PROFILE = {
       }
     },
     {
-      name: "TBL",
-      url: "https://github.com/nukdown/TBL",
-      tech: "Python, Django",
+      name: "TreinoSTI",
+      url: "https://github.com/nukdown/TreinoSTI",
+      tech: "Ruby on Rails",
       description: {
-        pt: "Plataforma gerenciadora de Team-Based Learning usada em disciplinas da UnB.",
-        en: "Team-Based Learning management platform used in UnB courses."
+        pt: "Estudo de modelagem com tabela única de herança (STI) em Rails.",
+        en: "Study of single-table inheritance (STI) modeling in Rails."
       }
     },
     {
-      name: "Mushroom_ML",
-      url: "https://github.com/nukdown/Mushroom_ML",
-      tech: "Python, scikit-learn",
+      name: "eng_req_twitch",
+      url: "https://github.com/nukdown/eng_req_twitch",
+      tech: { pt: "Engenharia de requisitos", en: "Requirements engineering" },
       description: {
-        pt: "Classificação de cogumelos comestíveis x venenosos com modelos de machine learning.",
-        en: "Classifying edible vs. poisonous mushrooms with machine learning models."
+        pt: "Elicitação e modelagem de requisitos da plataforma Twitch (UnB/FGA).",
+        en: "Requirements elicitation and modeling for the Twitch platform (UnB/FGA)."
       }
     },
     {
-      name: "controleatletas",
-      url: "https://github.com/nukdown/controleatletas",
-      tech: "Java",
+      name: "who-am-i",
+      url: "https://github.com/nukdown/who-am-i",
+      tech: "HTML, CSS, JavaScript",
       description: {
-        pt: "Sistema de cadastro e controle de atletas.",
-        en: "Athlete registration and management system."
+        pt: "Este portfólio: área de trabalho interativa em JavaScript puro, publicada via GitHub Actions.",
+        en: "This portfolio: an interactive desktop in vanilla JavaScript, deployed with GitHub Actions."
       }
     }
   ]

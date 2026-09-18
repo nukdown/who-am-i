@@ -132,7 +132,7 @@ window.APPS = (function () {
         '<li class="project-card">' +
         '<h3><a href="' + escapeHtml(project.url) + '" target="_blank" rel="noopener">' +
         escapeHtml(project.name) + "</a></h3>" +
-        '<p class="tech">' + escapeHtml(project.tech) + "</p>" +
+        '<p class="tech">' + escapeHtml(t(project.tech)) + "</p>" +
         "<p>" + escapeHtml(t(project.description)) + "</p>" +
         "</li>"
       );
@@ -222,7 +222,7 @@ window.APPS = (function () {
       },
       projects: function () {
         return profile.projects.map(function (project) {
-          return "- " + project.name + " (" + project.tech + ") " + project.url;
+          return "- " + project.name + " (" + t(project.tech) + ") " + project.url;
         }).join("\n");
       },
       contact: function () {
