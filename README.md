@@ -1,4 +1,4 @@
-# my-website
+# who-am-i
 
 Portfólio pessoal de **Emanoel Belchior** — engenheiro de software em busca de novas oportunidades.
 
@@ -34,7 +34,7 @@ assets/           # ícones e currículo em PDF
 O site é publicado no GitHub Pages a cada push na branch `main`
 (`.github/workflows/pages.yml`). Ative em **Settings → Pages → Source: GitHub Actions**.
 
-URL: https://nukdown.github.io/my-website/
+URL: https://nukdown.github.io/who-am-i/
 
 ## Funcionalidades pensadas para recrutadores
 

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nukdown.github.io/my-website/sitemap.xml
+Sitemap: https://nukdown.github.io/who-am-i/sitemap.xml
