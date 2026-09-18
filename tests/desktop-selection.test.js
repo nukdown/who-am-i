@@ -46,8 +46,8 @@ function createDesktop() {
   return desktop;
 }
 
-function pointer(desktop, type, x, y, options = {}) {
-  desktop.dispatchEvent(pointerEvent(type, {
+function pointer(desktop, type, x, y, options = {}, target = desktop) {
+  target.dispatchEvent(pointerEvent(type, {
     button: 0,
     clientX: x,
     clientY: y,
@@ -129,6 +129,33 @@ describe("DesktopSelection", () => {
       "projects",
       "contact"
     ]);
+  });
+
+  it("drags all selected icons together without opening them", () => {
+    pointer(desktop, "pointerdown", 105, 55);
+    pointer(desktop, "pointermove", 350, 180);
+    pointer(desktop, "pointerup", 350, 180);
+
+    const about = desktop.querySelector('[data-app-id="about"]');
+    const projects = desktop.querySelector('[data-app-id="projects"]');
+
+    pointer(desktop, "pointerdown", 150, 100, {}, about);
+    pointer(desktop, "pointermove", 180, 130);
+    pointer(desktop, "pointerup", 180, 130);
+
+    expect(about.style.transform).toBe("translate(30px, 30px)");
+    expect(projects.style.transform).toBe("translate(30px, 30px)");
+  });
+
+  it("selects and drags an unselected icon", () => {
+    const contact = desktop.querySelector('[data-app-id="contact"]');
+
+    pointer(desktop, "pointerdown", 550, 340, {}, contact);
+    pointer(desktop, "pointermove", 575, 365);
+    pointer(desktop, "pointerup", 575, 365);
+
+    expect(window.DesktopSelection.selectedIds()).toEqual(["contact"]);
+    expect(contact.style.transform).toBe("translate(25px, 25px)");
   });
 
   it("clears selection with the public clear method", () => {
