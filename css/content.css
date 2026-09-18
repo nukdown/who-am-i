@@ -54,3 +54,23 @@
 }
 .button:hover { background: linear-gradient(180deg, #ffffff, #d7e6fb); border-color: var(--accent); }
 .button.primary { background: linear-gradient(180deg, #4b93ea, #1f5fc0); border-color: var(--accent-dark); color: #fff; }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.project-card {
+  padding: 12px;
+  border: 1px solid #dfe3e8;
+  border-radius: 6px;
+  background: #fafbfc;
+}
+.project-card h3 { margin: 0 0 2px; font-size: 14px; }
+.project-card a { color: var(--accent-dark); }
+.project-card .tech { margin: 0 0 6px; color: #6b7a89; font-size: 12px; }
+.project-card p:last-child { margin: 0; }

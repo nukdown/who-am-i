@@ -70,6 +70,30 @@ window.APPS = (function () {
     );
   }
 
+  function projectsApp() {
+    var cards = profile.projects.map(function (project) {
+      return (
+        '<li class="project-card">' +
+        '<h3><a href="' + escapeHtml(project.url) + '" target="_blank" rel="noopener">' +
+        escapeHtml(project.name) + "</a></h3>" +
+        '<p class="tech">' + escapeHtml(project.tech) + "</p>" +
+        "<p>" + escapeHtml(t(project.description)) + "</p>" +
+        "</li>"
+      );
+    }).join("");
+
+    return (
+      '<div class="doc">' +
+      "<h1>" + (lang() === "en" ? "Projects" : "Projetos") + "</h1>" +
+      "<p>" + (lang() === "en"
+        ? "A selection of public repositories. Full list on GitHub."
+        : "Uma seleção de repositórios públicos. Lista completa no GitHub.") + "</p>" +
+      '<ul class="project-grid">' + cards + "</ul>" +
+      '<p><a class="button" href="' + escapeHtml(profile.github) + '" target="_blank" rel="noopener">GitHub</a></p>' +
+      "</div>"
+    );
+  }
+
   var registry = [
     {
       id: "curriculum",
@@ -86,6 +110,14 @@ window.APPS = (function () {
       width: 620,
       height: 460,
       render: aboutApp
+    },
+    {
+      id: "projects",
+      icon: "assets/icons/folder.svg",
+      title: { pt: "Projetos", en: "Projects" },
+      width: 700,
+      height: 500,
+      render: projectsApp
     }
   ];
 
