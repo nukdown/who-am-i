@@ -1,0 +1,56 @@
+.doc h1, .notepad h1 { margin: 0 0 4px; font-size: 22px; }
+.doc h2, .notepad h2 { margin: 20px 0 8px; font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-dark); }
+.doc p, .notepad p { margin: 0 0 10px; }
+
+.profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.avatar { width: 72px; height: 72px; border-radius: 50%; border: 2px solid var(--accent); }
+.role { color: #4a5a6a; }
+
+.badge {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge.available { background: #e3f6e8; color: #1f6b34; border: 1px solid #9ad6ab; }
+
+.skills { margin: 0; padding-left: 18px; }
+.skills li { margin-bottom: 6px; }
+
+.notepad {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  white-space: normal;
+}
+
+.job { margin-bottom: 16px; }
+.job h3 { margin: 0; font-size: 14px; }
+.job .period { margin: 2px 0 6px; color: #6b7a89; font-size: 12px; }
+.job ul { margin: 0; padding-left: 18px; }
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dfe3e8;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--surface-border);
+  border-radius: 4px;
+  background: linear-gradient(180deg, #ffffff, #e7e7e7);
+  color: var(--text);
+  font: 13px var(--font-ui);
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { background: linear-gradient(180deg, #ffffff, #d7e6fb); border-color: var(--accent); }
+.button.primary { background: linear-gradient(180deg, #4b93ea, #1f5fc0); border-color: var(--accent-dark); color: #fff; }
