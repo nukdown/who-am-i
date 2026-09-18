@@ -46,17 +46,27 @@ window.APPS = (function () {
     );
   }
 
+  function entry(item) {
+    var bullets = t(item.bullets).map(function (line) {
+      return "<li>" + escapeHtml(line) + "</li>";
+    }).join("");
+    return (
+      '<section class="job">' +
+      "<h3>" + escapeHtml(t(item.title)) + " — " + escapeHtml(item.company || item.school) + "</h3>" +
+      '<p class="period">' + escapeHtml(item.period) + "</p>" +
+      (bullets ? "<ul>" + bullets + "</ul>" : "") +
+      "</section>"
+    );
+  }
+
   function resumeApp() {
-    var jobs = profile.experience.map(function (job) {
-      var bullets = t(job.bullets).map(function (item) {
-        return "<li>" + escapeHtml(item) + "</li>";
-      }).join("");
+    var jobs = profile.experience.map(entry).join("");
+    var studies = (profile.education || []).map(entry).join("");
+    var skills = profile.skills.map(function (group) {
       return (
-        '<section class="job">' +
-        "<h3>" + escapeHtml(t(job.title)) + " — " + escapeHtml(job.company) + "</h3>" +
-        '<p class="period">' + escapeHtml(job.period) + "</p>" +
-        "<ul>" + bullets + "</ul>" +
-        "</section>"
+        "<li><strong>" + escapeHtml(t(group.group)) + ":</strong> " +
+        group.items.map(escapeHtml).join(" · ") +
+        "</li>"
       );
     }).join("");
 
@@ -70,12 +80,19 @@ window.APPS = (function () {
       (en ? "E-mail me" : "Falar comigo") + "</a>" +
       "</div>" +
       "<h1>" + escapeHtml(profile.name) + "</h1>" +
-      "<p>" + escapeHtml(t(profile.role)) + " · " + escapeHtml(profile.email) + "</p>" +
+      "<p>" + escapeHtml(t(profile.role)) + " · " + escapeHtml(t(profile.location)) + "</p>" +
+      "<p>" + escapeHtml(profile.email) +
+      (profile.phone ? " · " + escapeHtml(profile.phone) : "") +
+      " · " + escapeHtml(profile.github) + "</p>" +
       '<p class="badge available">' + escapeHtml(t(profile.status)) + "</p>" +
       "<h2>" + (en ? "Summary" : "Resumo") + "</h2>" +
       "<p>" + escapeHtml(t(profile.summary)) + "</p>" +
-      "<h2>" + (en ? "Experience & Education" : "Experiência e Formação") + "</h2>" +
+      "<h2>" + (en ? "Skills" : "Habilidades") + "</h2>" +
+      '<ul class="skills">' + skills + "</ul>" +
+      "<h2>" + (en ? "Experience" : "Experiência") + "</h2>" +
       jobs +
+      "<h2>" + (en ? "Education" : "Formação") + "</h2>" +
+      studies +
       "</article>"
     );
   }
@@ -130,6 +147,7 @@ window.APPS = (function () {
       "</div>" +
       '<ul class="contact-list">' +
       "<li><strong>E-mail:</strong> " + escapeHtml(profile.email) + "</li>" +
+      (profile.phone ? "<li><strong>" + (en ? "Phone" : "Telefone") + ":</strong> " + escapeHtml(profile.phone) + "</li>" : "") +
       "<li><strong>" + (en ? "Location" : "Local") + ":</strong> " + escapeHtml(t(profile.location)) + "</li>" +
       "<li><strong>Status:</strong> " + escapeHtml(t(profile.status)) + "</li>" +
       "</ul>" +
