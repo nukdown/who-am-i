@@ -172,10 +172,14 @@ window.WM = (function () {
     return win;
   }
 
+  function openIds() {
+    return Array.from(windows.keys());
+  }
+
   function init() {
     container = document.getElementById("windows");
     taskList = document.getElementById("task-list");
   }
 
-  return { init: init, open: open, close: close, focus: focus };
+  return { init: init, open: open, close: close, focus: focus, openIds: openIds };
 })();

@@ -5,7 +5,8 @@
     var clock = document.getElementById("clock");
     if (!clock) return;
     function tick() {
-      clock.textContent = new Date().toLocaleTimeString("pt-BR", {
+      var locale = window.I18N.current() === "en" ? "en-US" : "pt-BR";
+      clock.textContent = new Date().toLocaleTimeString(locale, {
         hour: "2-digit",
         minute: "2-digit"
       });
@@ -77,12 +78,38 @@
     });
   }
 
+  function setupLanguageToggle() {
+    var button = document.getElementById("lang-toggle");
+    if (!button) return;
+    function label() { button.textContent = window.I18N.ui("switchTo"); }
+    label();
+    button.addEventListener("click", function () { window.I18N.toggle(); });
+    window.I18N.onChange(label);
+  }
+
+  function applyLanguage() {
+    var startLabel = document.querySelector("#start-button span:last-child");
+    if (startLabel) startLabel.textContent = window.I18N.ui("start");
+    var desktop = document.getElementById("desktop");
+    if (desktop) desktop.setAttribute("aria-label", window.I18N.ui("desktop"));
+    renderDesktopIcons();
+    renderStartMenu();
+
+    var openIds = window.WM.openIds();
+    openIds.forEach(function (id) { window.WM.close(id); });
+    openIds.forEach(function (id) { window.APPS.openById(id); });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    window.I18N.init();
     window.WM.init();
     renderDesktopIcons();
     renderStartMenu();
     startClock();
     setupStartMenu();
+    setupLanguageToggle();
+    applyLanguage();
+    window.I18N.onChange(applyLanguage);
     window.APPS.openById("about");
   });
 })();

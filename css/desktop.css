@@ -205,3 +205,16 @@ body {
   .desktop-icons { grid-auto-flow: row; grid-template-columns: repeat(auto-fill, 88px); grid-template-rows: none; }
   .desktop-icon { width: 88px; }
 }
+
+.tray { gap: 10px; }
+
+.tray-button {
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font: 12px var(--font-ui);
+  cursor: pointer;
+}
+.tray-button:hover { background: rgba(255, 255, 255, 0.3); }
