@@ -93,6 +93,78 @@ window.PROFILE = {
       bullets: { pt: [], en: [] }
     }
   ],
+  /**
+   * Stack de IA aplicada ao desenvolvimento: o que já uso no dia a dia e o
+   * que está em estudo. Alimenta o app "IA no Dev" da área de trabalho.
+   */
+  aiStack: [
+    {
+      level: { pt: "Uso no dia a dia", en: "Daily use" },
+      items: [
+        {
+          name: { pt: "Agentes de código (Devin, Claude Code, Cursor)", en: "Coding agents (Devin, Claude Code, Cursor)" },
+          note: {
+            pt: "Delego tarefas fechadas — refatorações, testes, migrações — e reviso o diff como faria em um code review.",
+            en: "I delegate scoped tasks — refactors, tests, migrations — and review the diff like any code review."
+          }
+        },
+        {
+          name: "GitHub Copilot",
+          note: {
+            pt: "Autocomplete e geração de testes direto no editor, com validação manual das regras de negócio.",
+            en: "Inline completion and test generation in the editor, with manual validation of business rules."
+          }
+        },
+        {
+          name: { pt: "Engenharia de prompt", en: "Prompt engineering" },
+          note: {
+            pt: "Contexto explícito, exemplos e critérios de aceite; prompts versionados junto com o código.",
+            en: "Explicit context, examples and acceptance criteria; prompts versioned alongside the code."
+          }
+        },
+        {
+          name: { pt: "Revisão de código assistida por IA", en: "AI-assisted code review" },
+          note: {
+            pt: "Análise automática de PRs para pegar regressões e riscos antes do revisor humano.",
+            en: "Automated PR analysis to catch regressions and risks before the human reviewer."
+          }
+        }
+      ]
+    },
+    {
+      level: { pt: "Em aprofundamento", en: "Deepening" },
+      items: [
+        {
+          name: "LLM APIs (OpenAI, Anthropic)",
+          note: {
+            pt: "Function calling, saídas estruturadas e controle de custo/latência em produção.",
+            en: "Function calling, structured outputs and cost/latency control in production."
+          }
+        },
+        {
+          name: { pt: "RAG e embeddings", en: "RAG and embeddings" },
+          note: {
+            pt: "Busca vetorial (pgvector) sobre bases internas para respostas fundamentadas em documentos.",
+            en: "Vector search (pgvector) over internal data for document-grounded answers."
+          }
+        },
+        {
+          name: { pt: "Avaliação de modelos e prompts", en: "Model and prompt evaluation" },
+          note: {
+            pt: "Datasets de avaliação e testes de regressão para prompts — a mesma lógica de mutation testing aplicada a IA.",
+            en: "Evaluation datasets and regression tests for prompts — mutation-testing thinking applied to AI."
+          }
+        },
+        {
+          name: { pt: "MCP e automação de agentes", en: "MCP and agent automation" },
+          note: {
+            pt: "Conectar agentes a ferramentas internas (banco, CI, tickets) com permissões controladas.",
+            en: "Connecting agents to internal tools (database, CI, tickets) with controlled permissions."
+          }
+        }
+      ]
+    }
+  ],
   projects: [
     {
       name: "diaspora-suite-test-evaluation",

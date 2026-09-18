@@ -97,6 +97,34 @@ window.APPS = (function () {
     );
   }
 
+  function aiApp() {
+    var en = lang() === "en";
+    var groups = (profile.aiStack || []).map(function (group) {
+      var items = group.items.map(function (item) {
+        return (
+          '<li class="project-card">' +
+          "<h3>" + escapeHtml(t(item.name)) + "</h3>" +
+          "<p>" + escapeHtml(t(item.note)) + "</p>" +
+          "</li>"
+        );
+      }).join("");
+      return (
+        "<h2>" + escapeHtml(t(group.level)) + "</h2>" +
+        '<ul class="project-grid">' + items + "</ul>"
+      );
+    }).join("");
+
+    return (
+      '<div class="doc">' +
+      "<h1>" + (en ? "AI in my workflow" : "IA no meu fluxo de trabalho") + "</h1>" +
+      "<p>" + (en
+        ? "How I use AI tooling as an engineer: less typing, same engineering discipline — every generated change goes through tests and review."
+        : "Como uso ferramentas de IA como engenheiro: menos digitação, a mesma disciplina de engenharia — todo código gerado passa por testes e revisão.") + "</p>" +
+      groups +
+      "</div>"
+    );
+  }
+
   function projectsApp() {
     var cards = profile.projects.map(function (project) {
       return (
@@ -173,8 +201,8 @@ window.APPS = (function () {
     var commands = {
       help: function () {
         return en
-          ? "Available commands: help, whoami, skills, projects, hire, contact, clear"
-          : "Comandos: help, whoami, skills, projects, hire, contact, clear";
+          ? "Available commands: help, whoami, skills, ai, projects, hire, contact, clear"
+          : "Comandos: help, whoami, skills, ai, projects, hire, contact, clear";
       },
       whoami: function () {
         return profile.name + " - " + t(profile.role) + "\n" + t(profile.summary);
@@ -182,6 +210,13 @@ window.APPS = (function () {
       skills: function () {
         return profile.skills.map(function (group) {
           return t(group.group) + ": " + group.items.join(", ");
+        }).join("\n");
+      },
+      ai: function () {
+        return (profile.aiStack || []).map(function (group) {
+          return t(group.level) + ":\n" + group.items.map(function (item) {
+            return "  - " + t(item.name);
+          }).join("\n");
         }).join("\n");
       },
       projects: function () {
@@ -245,6 +280,14 @@ window.APPS = (function () {
       width: 700,
       height: 500,
       render: projectsApp
+    },
+    {
+      id: "ai",
+      icon: "assets/icons/ai.svg",
+      title: { pt: "IA no Dev", en: "AI in Dev" },
+      width: 700,
+      height: 520,
+      render: aiApp
     },
     {
       id: "contact",
