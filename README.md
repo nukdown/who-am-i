@@ -28,3 +28,18 @@ js/apps.js        # conteúdo de cada programa
 js/data.js        # dados do perfil (edite aqui para atualizar o currículo)
 assets/           # ícones e currículo em PDF
 ```
+
+## Publicação
+
+O site é publicado no GitHub Pages a cada push na branch `main`
+(`.github/workflows/pages.yml`). Ative em **Settings → Pages → Source: GitHub Actions**.
+
+URL: https://nukdown.github.io/my-website/
+
+## Funcionalidades pensadas para recrutadores
+
+- **Currículo imprimível**: botão "Baixar PDF / Imprimir" gera uma versão limpa em uma página.
+- **SEO**: JSON-LD `Person`, Open Graph, `sitemap.xml`, `robots.txt` e conteúdo em `<noscript>`.
+- **PT-BR / EN**: alternância de idioma na barra de tarefas, com preferência salva.
+- **Contato de um clique**: e-mail pré-preenchido com assunto de vaga e cópia rápida do endereço.
+- **Terminal**: comandos `whoami`, `skills`, `projects`, `hire` para quem gosta de explorar.
