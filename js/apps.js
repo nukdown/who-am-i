@@ -137,6 +137,72 @@ window.APPS = (function () {
     );
   }
 
+  function terminalApp() {
+    var en = lang() === "en";
+    var root = document.createElement("div");
+    root.className = "terminal";
+    var output = document.createElement("pre");
+    output.className = "terminal-output";
+    var form = document.createElement("form");
+    form.className = "terminal-prompt";
+    form.innerHTML = '<span>visitante@portfolio:~$</span>';
+    var input = document.createElement("input");
+    input.setAttribute("aria-label", en ? "Terminal command" : "Comando do terminal");
+    input.autocomplete = "off";
+    form.appendChild(input);
+    root.append(output, form);
+
+    var commands = {
+      help: function () {
+        return en
+          ? "Available commands: help, whoami, skills, projects, hire, contact, clear"
+          : "Comandos: help, whoami, skills, projects, hire, contact, clear";
+      },
+      whoami: function () {
+        return profile.name + " - " + t(profile.role) + "\n" + t(profile.summary);
+      },
+      skills: function () {
+        return profile.skills.map(function (group) {
+          return t(group.group) + ": " + group.items.join(", ");
+        }).join("\n");
+      },
+      projects: function () {
+        return profile.projects.map(function (project) {
+          return "- " + project.name + " (" + project.tech + ") " + project.url;
+        }).join("\n");
+      },
+      contact: function () {
+        return "email: " + profile.email + "\ngithub: " + profile.github;
+      },
+      hire: function () {
+        return en
+          ? "Status: " + t(profile.status) + "\nRun 'contact' to reach me."
+          : "Status: " + t(profile.status) + "\nUse 'contact' para falar comigo.";
+      },
+      clear: function () { output.textContent = ""; return ""; }
+    };
+
+    function print(text) {
+      if (text) output.textContent += text + "\n";
+      output.scrollTop = output.scrollHeight;
+    }
+
+    print((en ? "Portfolio shell - type 'help' to start." : "Shell do portfolio - digite 'help' para comecar.") + "\n");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var value = input.value.trim();
+      input.value = "";
+      if (!value) return;
+      print("visitante@portfolio:~$ " + value);
+      var handler = commands[value.toLowerCase()];
+      print(handler ? handler() : (en ? "command not found: " : "comando nao encontrado: ") + value);
+    });
+
+    setTimeout(function () { input.focus(); }, 50);
+    return root;
+  }
+
   var registry = [
     {
       id: "curriculum",
@@ -169,6 +235,14 @@ window.APPS = (function () {
       width: 560,
       height: 400,
       render: contactApp
+    },
+    {
+      id: "terminal",
+      icon: "assets/icons/terminal.svg",
+      title: { pt: "Terminal", en: "Terminal" },
+      width: 620,
+      height: 380,
+      render: terminalApp
     }
   ];
 
