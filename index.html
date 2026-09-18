@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Emanoel Belchior — Software Engineer</title>
+  <meta name="description" content="Portfólio de Emanoel Belchior, engenheiro de software disponível para novas oportunidades. Currículo, projetos e contato em uma área de trabalho interativa." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/desktop.css" />
+  <link rel="stylesheet" href="css/window.css" />
+</head>
+<body>
+  <main id="desktop" class="desktop" aria-label="Área de trabalho">
+    <ul id="desktop-icons" class="desktop-icons" role="list"></ul>
+    <div id="windows" class="windows"></div>
+  </main>
+
+  <footer id="taskbar" class="taskbar">
+    <button id="start-button" class="start-button" aria-haspopup="menu" aria-expanded="false">
+      <span class="start-logo" aria-hidden="true"></span>
+      <span>Iniciar</span>
+    </button>
+    <nav id="task-list" class="task-list" aria-label="Janelas abertas"></nav>
+    <div class="tray">
+      <span id="clock" class="clock" aria-live="off"></span>
+    </div>
+  </footer>
+
+  <div id="start-menu" class="start-menu" role="menu" hidden></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

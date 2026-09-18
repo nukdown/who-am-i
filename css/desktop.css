@@ -1,0 +1,207 @@
+:root {
+  --taskbar-height: 44px;
+  --accent: #1f6feb;
+  --accent-dark: #0b3d91;
+  --surface: #ece9d8;
+  --surface-border: #a6a6a6;
+  --text: #1b1b1b;
+  --font-ui: "Segoe UI", Tahoma, Verdana, sans-serif;
+  --font-mono: "Cascadia Mono", "Consolas", "DejaVu Sans Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--text);
+  overflow: hidden;
+}
+
+body {
+  background:
+    radial-gradient(120% 90% at 50% 0%, #6fb1ff 0%, #2a6fd6 45%, #113a7a 100%),
+    #113a7a;
+}
+
+.desktop {
+  position: absolute;
+  inset: 0 0 var(--taskbar-height) 0;
+  overflow: hidden;
+}
+
+.desktop::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 42%;
+  background: linear-gradient(180deg, rgba(76, 160, 92, 0) 0%, #4ca05c 45%, #2f7a43 100%);
+  clip-path: ellipse(90% 100% at 50% 100%);
+  pointer-events: none;
+}
+
+/* Desktop icons */
+.desktop-icons {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(auto-fill, 104px);
+  justify-content: start;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 12px;
+  height: 100%;
+}
+
+.desktop-icon {
+  width: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 4px;
+  background: none;
+  border: 1px dotted transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+
+.desktop-icon:hover,
+.desktop-icon:focus-visible {
+  background: rgba(31, 111, 235, 0.35);
+  border-color: rgba(255, 255, 255, 0.7);
+  outline: none;
+}
+
+.desktop-icon img {
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+}
+
+/* Taskbar */
+.taskbar {
+  position: fixed;
+  inset: auto 0 0 0;
+  height: var(--taskbar-height);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 0 0;
+  background: linear-gradient(180deg, #3f8ae8 0%, #1f5fc0 12%, #17458f 100%);
+  border-top: 1px solid #5ea2f5;
+  z-index: 9000;
+}
+
+.start-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  padding: 0 20px 0 12px;
+  border: none;
+  border-radius: 0 12px 12px 0;
+  background: linear-gradient(180deg, #5fbc5f 0%, #3a9a3a 45%, #2b7a2b 100%);
+  color: #fff;
+  font: 600 15px/1 var(--font-ui);
+  font-style: italic;
+  cursor: pointer;
+}
+
+.start-button:hover { filter: brightness(1.1); }
+
+.start-logo {
+  width: 18px;
+  height: 18px;
+  background: conic-gradient(#ff4d4d 0 25%, #4dff88 0 50%, #4db8ff 0 75%, #ffd24d 0);
+  border-radius: 3px;
+}
+
+.task-list {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.task-button {
+  min-width: 140px;
+  max-width: 200px;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font: 12px var(--font-ui);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.task-button[aria-pressed="true"] { background: rgba(0, 0, 0, 0.3); }
+
+.tray {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px;
+  background: rgba(0, 0, 0, 0.18);
+  color: #fff;
+  font-size: 12px;
+}
+
+/* Start menu */
+.start-menu {
+  position: fixed;
+  left: 6px;
+  bottom: calc(var(--taskbar-height) + 4px);
+  width: 260px;
+  padding: 8px;
+  border: 1px solid var(--accent-dark);
+  border-radius: 8px 8px 0 0;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  z-index: 9500;
+}
+
+.start-menu[hidden] { display: none; }
+
+.start-menu-header {
+  margin: -8px -8px 8px;
+  padding: 10px 12px;
+  border-radius: 7px 7px 0 0;
+  background: linear-gradient(180deg, #3f8ae8, #17458f);
+  color: #fff;
+  font-weight: 600;
+}
+
+.start-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  font: 13px var(--font-ui);
+  text-align: left;
+  cursor: pointer;
+}
+
+.start-menu-item:hover { background: var(--accent); color: #fff; }
+.start-menu-item img { width: 24px; height: 24px; }
+
+@media (max-width: 720px) {
+  .desktop-icons { grid-auto-flow: row; grid-template-columns: repeat(auto-fill, 88px); grid-template-rows: none; }
+  .desktop-icon { width: 88px; }
+}
