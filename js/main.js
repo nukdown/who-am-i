@@ -110,6 +110,6 @@
     setupLanguageToggle();
     applyLanguage();
     window.I18N.onChange(applyLanguage);
-    window.APPS.openById("about");
+    window.APPS.openFromHash();
   });
 })();

@@ -43,3 +43,5 @@ URL: https://nukdown.github.io/my-website/
 - **PT-BR / EN**: alternância de idioma na barra de tarefas, com preferência salva.
 - **Contato de um clique**: e-mail pré-preenchido com assunto de vaga e cópia rápida do endereço.
 - **Terminal**: comandos `whoami`, `skills`, `projects`, `hire` para quem gosta de explorar.
+- **Links diretos**: `#curriculum`, `#projects`, `#contact` abrem o programa correspondente,
+  útil para colar em uma candidatura.

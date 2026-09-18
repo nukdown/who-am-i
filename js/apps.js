@@ -278,7 +278,16 @@ window.APPS = (function () {
       height: app.height,
       content: app.render()
     });
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "#" + app.id);
+    }
   }
 
-  return { list: list, openById: openById, t: t, escapeHtml: escapeHtml, lang: lang };
+  function openFromHash() {
+    var id = (window.location.hash || "").replace("#", "");
+    var known = registry.some(function (app) { return app.id === id; });
+    openById(known ? id : "about");
+  }
+
+  return { list: list, openById: openById, openFromHash: openFromHash, t: t, escapeHtml: escapeHtml, lang: lang };
 })();
