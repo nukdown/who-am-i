@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  var DRAG_THRESHOLD = 4;
+
   var state = {
     root: null,
     box: null,
@@ -9,7 +11,12 @@
     additive: false,
     dragging: false,
     suppressClick: false,
-    pointerId: null
+    pointerId: null,
+    draggingIcons: false,
+    dragIcon: null,
+    dragStartX: 0,
+    dragStartY: 0,
+    iconOffsets: []
   };
 
   function normalizeRect(x1, y1, x2, y2) {
@@ -41,6 +48,12 @@
   function getIcons() {
     if (!state.root) return [];
     return Array.from(state.root.querySelectorAll(".desktop-icon"));
+  }
+
+  function getSelectedIcons() {
+    return getIcons().filter(function (icon) {
+      return icon.classList.contains("selected");
+    });
   }
 
   function getRect(element) {
@@ -93,17 +106,99 @@
     selectAtRect(rect, state.additive);
   }
 
-  function isDesktopTarget(event) {
+  function isIgnoredTarget(event) {
     var target = event.target;
-    if (!target || !target.closest) return true;
+    if (!target || !target.closest) return false;
 
-    return !target.closest(
-      ".desktop-icon, .window, .taskbar, .start-menu, .desktop-selection-box"
+    return !!target.closest(
+      ".window, .taskbar, .start-menu, .desktop-selection-box"
     );
   }
 
+  function beginIconDrag(icon, event) {
+    var rootRect = state.root.getBoundingClientRect();
+
+    state.draggingIcons = true;
+    state.dragIcon = icon;
+    state.dragStartX = event.clientX;
+    state.dragStartY = event.clientY;
+    state.pointerId = event.pointerId;
+    state.suppressClick = false;
+    state.iconOffsets = getSelectedIcons().map(function (selectedIcon) {
+      return {
+        icon: selectedIcon,
+        x: Number(selectedIcon.dataset.dragX || 0),
+        y: Number(selectedIcon.dataset.dragY || 0),
+        rect: getRect(selectedIcon)
+      };
+    });
+
+    if (!icon.classList.contains("selected")) {
+      if (!event.ctrlKey && !event.metaKey) clear();
+      setSelected(icon, true);
+      state.iconOffsets = [{
+        icon: icon,
+        x: Number(icon.dataset.dragX || 0),
+        y: Number(icon.dataset.dragY || 0),
+        rect: getRect(icon)
+      }];
+    }
+
+    state.dragStartRootX = event.clientX - rootRect.left;
+    state.dragStartRootY = event.clientY - rootRect.top;
+
+    if (typeof state.root.setPointerCapture === "function") {
+      state.root.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function updateIconDrag(event) {
+    var dx = event.clientX - state.dragStartX;
+    var dy = event.clientY - state.dragStartY;
+
+    if (!state.dragging) {
+      if (Math.max(Math.abs(dx), Math.abs(dy)) < DRAG_THRESHOLD) return;
+      state.dragging = true;
+      state.suppressClick = true;
+    }
+
+    state.iconOffsets.forEach(function (entry) {
+      var nextX = entry.x + dx;
+      var nextY = entry.y + dy;
+      entry.icon.dataset.dragX = String(nextX);
+      entry.icon.dataset.dragY = String(nextY);
+      entry.icon.style.transform = "translate(" + nextX + "px, " + nextY + "px)";
+    });
+  }
+
+  function finishIconDrag(event) {
+    if (state.dragging) {
+      updateIconDrag(event);
+    }
+
+    state.draggingIcons = false;
+    state.dragIcon = null;
+    state.iconOffsets = [];
+    state.pointerId = null;
+
+    if (state.suppressClick) {
+      window.setTimeout(function () {
+        state.suppressClick = false;
+      }, 0);
+    }
+  }
+
   function onPointerDown(event) {
-    if (event.button !== 0 || !state.root || !isDesktopTarget(event)) return;
+    if (event.button !== 0 || !state.root || isIgnoredTarget(event)) return;
+
+    var icon = event.target && event.target.closest
+      ? event.target.closest(".desktop-icon")
+      : null;
+
+    if (icon && state.root.contains(icon)) {
+      beginIconDrag(icon, event);
+      return;
+    }
 
     var rootRect = state.root.getBoundingClientRect();
 
@@ -111,6 +206,7 @@
     state.startY = event.clientY - rootRect.top;
     state.additive = event.ctrlKey || event.metaKey;
     state.dragging = false;
+    state.draggingIcons = false;
     state.suppressClick = false;
     state.pointerId = event.pointerId;
 
@@ -122,7 +218,14 @@
   }
 
   function onPointerMove(event) {
-    if (!state.box || (state.pointerId !== null && event.pointerId !== state.pointerId)) return;
+    if (state.pointerId !== null && event.pointerId !== state.pointerId) return;
+
+    if (state.draggingIcons) {
+      updateIconDrag(event);
+      return;
+    }
+
+    if (!state.box) return;
 
     var rootRect = state.root.getBoundingClientRect();
     var currentX = event.clientX - rootRect.left;
@@ -132,7 +235,7 @@
       Math.abs(currentY - state.startY)
     );
 
-    if (distance < 4) return;
+    if (distance < DRAG_THRESHOLD) return;
 
     state.dragging = true;
     state.suppressClick = true;
@@ -140,7 +243,14 @@
   }
 
   function finishPointer(event) {
-    if (!state.box || (state.pointerId !== null && event.pointerId !== state.pointerId)) return;
+    if (state.pointerId !== null && event.pointerId !== state.pointerId) return;
+
+    if (state.draggingIcons) {
+      finishIconDrag(event);
+      return;
+    }
+
+    if (!state.box) return;
 
     if (state.dragging) {
       var rootRect = state.root.getBoundingClientRect();
@@ -199,16 +309,15 @@
     state.pointerId = null;
     state.suppressClick = false;
     state.dragging = false;
+    state.draggingIcons = false;
+    state.dragIcon = null;
+    state.iconOffsets = [];
   }
 
   function selectedIds() {
-    return getIcons()
-      .filter(function (icon) {
-        return icon.classList.contains("selected");
-      })
-      .map(function (icon) {
-        return icon.dataset.appId;
-      });
+    return getSelectedIcons().map(function (icon) {
+      return icon.dataset.appId;
+    });
   }
 
   window.DesktopSelection = {
