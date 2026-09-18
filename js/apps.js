@@ -83,7 +83,8 @@ window.APPS = (function () {
       "<p>" + escapeHtml(t(profile.role)) + " · " + escapeHtml(t(profile.location)) + "</p>" +
       "<p>" + escapeHtml(profile.email) +
       (profile.phone ? " · " + escapeHtml(profile.phone) : "") +
-      " · " + escapeHtml(profile.github) + "</p>" +
+      " · " + escapeHtml(profile.github) +
+      " · " + escapeHtml(profile.linkedin) + "</p>" +
       '<p class="badge available">' + escapeHtml(t(profile.status)) + "</p>" +
       "<h2>" + (en ? "Summary" : "Resumo") + "</h2>" +
       "<p>" + escapeHtml(t(profile.summary)) + "</p>" +

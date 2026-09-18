@@ -16,7 +16,7 @@ window.PROFILE = {
   email: "belchior.emanoel@gmail.com",
   phone: "+55 (61) 9 9416-7322",
   github: "https://github.com/nukdown",
-  linkedin: "https://www.linkedin.com/in/", // AJUSTE: url completa do LinkedIn
+  linkedin: "https://www.linkedin.com/in/emanoel-belchior/",
   summary: {
     pt: "Engenheiro de software formado pela Universidade de Brasília (FGA), com mais de quatro anos construindo sistemas corporativos em Oracle APEX, PL/SQL e JavaScript no TCU e na Compware. Trabalho com desenvolvimento assistido por IA no dia a dia — agentes de código, revisão automatizada e RAG — para entregar mais rápido sem abrir mão de testes e código legível.",
     en: "Software engineer graduated at Universidade de Brasília (FGA), with 4+ years building enterprise systems in Oracle APEX, PL/SQL and JavaScript at TCU and Compware. I work with AI-assisted development day to day — coding agents, automated review and RAG — to ship faster without giving up tests and readable code."
